@@ -26,8 +26,7 @@ public class Consumer {
 
     private static int numberOfCustomers = 0;
 
-    Consumer(String name,int streetNumber,String city,String postalCode,
-    int age,String gender, MaritalStatus martialStatus,Education education){
+    Consumer(String name,int streetNumber,String city,String postalCode,int age,String gender, MaritalStatus martialStatus,Education education){
         this.name = name;
         this.streetNumber = streetNumber;
         this.city = city;
