@@ -17,6 +17,8 @@ public class Consumer {
     private static final String[] MaritalStatus = {"Single","Married","Divorsed"};
     private static final String[] Education = {"HS","College","University"};
 
+    Consumer(){}
+
     Consumer(String name,int streetNumber,String city,String postalCode,int age,String gender, String martialStatus,String education){
         this.name = name;
         this.streetNumber = streetNumber;
@@ -24,8 +26,8 @@ public class Consumer {
         this.postalCode = postalCode;
         this.age = age;
         this.gender = gender;
-        this.martialStatus = martialStatus;
-        this.education = education;
+        setMartialStatus(martialStatus);
+        setEducation(education);
         numberOfCustomers++;
     }
 
@@ -119,7 +121,7 @@ public class Consumer {
         return education;
     }
 
-    public int getNumberOfConsumers(){
+    public static int getNumberOfConsumers(){
         return numberOfCustomers;
     }
 
