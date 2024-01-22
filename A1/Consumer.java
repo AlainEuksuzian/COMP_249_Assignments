@@ -1,18 +1,7 @@
-package comp249_assignments.A1;
+package A1;
 
 /* */
 public class Consumer {
-
-        enum MaritalStatus{
-        Single,
-        Married,
-        Divorsed
-    };
-        enum Education{
-        HS,
-        College,
-        University
-    };
 
     private String name;
     private int streetNumber;
@@ -21,12 +10,14 @@ public class Consumer {
     private String postalCode;
     private int age;
     private String gender;
-    private MaritalStatus martialStatus;
-    private Education education;
+    private String martialStatus;
+    private String education;
 
     private static int numberOfCustomers = 0;
+    private static final String[] MaritalStatus = {"Single","Married","Divorsed"};
+    private static final String[] Education = {"HS","College","University"};
 
-    Consumer(String name,int streetNumber,String city,String postalCode,int age,String gender, MaritalStatus martialStatus,Education education){
+    Consumer(String name,int streetNumber,String city,String postalCode,int age,String gender, String martialStatus,String education){
         this.name = name;
         this.streetNumber = streetNumber;
         this.city = city;
@@ -40,7 +31,7 @@ public class Consumer {
 
 
     /**
-     * 
+     * seets name of object
      */
     public void setName(String name) {
         this.name = name;
@@ -48,15 +39,23 @@ public class Consumer {
 
     /**
      * 
+     * @return name of object
      */
     public String getName() {
         return name;
     }
 
+    /**
+     * sets streen number of object
+     * @param streetNumber
+     */
     public void setStreetNumber(int streetNumber) {
         this.streetNumber = streetNumber;
     }
 
+    /**
+     * @return street number of obj
+     */
     public int getStreetNumber() {
         return streetNumber;
     }
@@ -93,18 +92,30 @@ public class Consumer {
         return gender;
     }
 
-    public void setMartialStatus(MaritalStatus martialStatus) {
-        this.martialStatus = martialStatus;
+    public void setMartialStatus(String martialStat) {
+        if (containsMaritial(martialStat)){
+            this.martialStatus = martialStat;
+            return;
+        }
+        System.out.println("invalid option entered");
+        
     }
-    public MaritalStatus getMartialStatus() {
+
+
+
+    public String getMartialStatus() {
         return martialStatus;
     }
 
-    public void setEducation(Education education) {
-        this.education = education;
+    public void setEducation(String education) {
+        if (containsEducation(education)){
+            this.education = education;
+            return;
+        }
+        System.out.println("invalid option entered");
     }
 
-    public Education getEducation() {
+    public String getEducation() {
         return education;
     }
 
@@ -136,8 +147,29 @@ public class Consumer {
             && this.age == otherObj.age && this.gender.equalsIgnoreCase(otherObj.gender) && this.martialStatus.equals(otherObj.martialStatus)
             && this.education.equals(otherObj.education);
         }
-
     }
+
+    private static boolean containsMaritial(String userInput){
+
+        for (int i = 0; i < MaritalStatus.length; i++){
+            if (MaritalStatus[i].equalsIgnoreCase(userInput)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static boolean containsEducation(String userInput){
+        for (int i = 0; i < Education.length; i++){
+            if (Education[i].equalsIgnoreCase(userInput)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+
 
 
 
