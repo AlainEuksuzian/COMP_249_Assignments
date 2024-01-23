@@ -1,3 +1,10 @@
+// ----------------------------------------------------- 
+// Assignment: A1
+// Class: COMP 249 (Object Oriented Programming 2)
+// Question: full assignment
+// Written by: yours truly, Alain E. :D
+// -----------------------------------------------------
+
 package A1;
 import java.util.Scanner;
 public class Main {
@@ -47,6 +54,7 @@ public class Main {
                     break;
             }
         }
+
     }
 
     private static String getUserInput(String message){
@@ -144,7 +152,7 @@ public class Main {
         int tries = 0;
 
         while (tries < 3 && !isLogged){
-            String pwInput = getUserInput("enter the password to prioceed: ");
+            String pwInput = getUserInput("enter the password to proceed: ");
             if (passwordCheck(pwInput)){
                 isLogged = true;
             }
@@ -159,29 +167,36 @@ public class Main {
         }
         else {
             System.out.println("you are logged in");
-            int indexObject = -1; // to avoid wrong assignment
+            Integer indexObject = null; // to avoid wrong assignment
             while(true){
                 indexObject = Integer.parseInt(getUserInput("enter the index you wish to change:"));
-                if (consumerDatabase[indexObject] == null){
-                   String option = getUserInput("index element is empty, try again? (Y/N)>");{
-                    if (option.equalsIgnoreCase("n")){
+                
+                if (indexObject < consumerDatabase.length-1){
+                    if (consumerDatabase[indexObject] == null){
+                        indexObject = null;
+                        String option = getUserInput("index element is empty, try again? (Y/N)>");
+                         if (option.equalsIgnoreCase("n")){
+                             break;
+                         }
+                       
+                     }
+                     else if (indexObject != null){
+                        System.out.println("Consumer # " + indexObject );
+                        System.out.println("PREVIOUS DATA:\n" +consumerDatabase[indexObject].toString());
+                        menuToChange(consumerDatabase[indexObject]);
+                        System.out.println("NEW DATA:\n"+ consumerDatabase[indexObject].toString());
                         break;
-                    }
-                    
+                     }
                    }
-                }
-            }
-            System.out.println("Consumer # " + indexObject );
-            consumerDatabase[indexObject].toString();
-            menuToChange(consumerDatabase[indexObject]);
-            consumerDatabase[indexObject].toString();
-
+                   else {
+                    System.out.println("index out of bounds, try again");
+                   }
+              }
         }
-
-    }
+      }
 
     public static int menuToChange(Consumer obj){
-        int optionChange = Integer.parseInt("What information would you like to change?\n1. Consumer name\n2.Location\n3. Age\n4. Gender\n5. Marital Status\n6. Quit");
+        int optionChange = Integer.parseInt(getUserInput("What information would you like to change?\n1. Consumer name\n2.Location\n3. Age\n4. Gender\n5. Marital Status\n6. Quit"));
         int output = 0;
         switch (optionChange) {
             case 1:
@@ -232,7 +247,7 @@ public class Main {
 
     private static void optionThree(int age, String gender, String education){
         for (Consumer element : consumerDatabase ){
-            if (element.getAge() == age && element.getGender() == gender && element.getEducation() == education){
+            if (element != null && element.getAge() == age && element.getGender() == gender && element.getEducation() == education){
                 System.out.println(element);
             }
         }
@@ -240,7 +255,7 @@ public class Main {
 
     private static void optionFour(int age, String postalCode){
         for (Consumer element : consumerDatabase){
-            if (element.getAge() == age && element.getPostalCode() == postalCode){
+            if (element != null &&  element.getAge() == age && element.getPostalCode() == postalCode){
                 System.out.println(element);
             }
         }
@@ -250,9 +265,4 @@ public class Main {
         System.out.println("end of program");
         System.exit(0);
     }
-
-
-
-
-
 }
