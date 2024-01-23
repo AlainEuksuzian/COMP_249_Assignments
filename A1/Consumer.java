@@ -19,9 +19,10 @@ public class Consumer {
 
     Consumer(){}
 
-    Consumer(String name,int streetNumber,String city,String postalCode,int age,String gender, String martialStatus,String education){
+    Consumer(String name,int streetNumber,String streetName,String city,String postalCode,int age,String gender, String martialStatus,String education){
         this.name = name;
         this.streetNumber = streetNumber;
+        this.streetName = streetName;
         this.city = city;
         this.postalCode = postalCode;
         this.age = age;
@@ -60,6 +61,14 @@ public class Consumer {
      */
     public int getStreetNumber() {
         return streetNumber;
+    }
+
+    public void setStreetName(String streetName) {
+        this.streetName = streetName;
+    }
+
+    public String getStreetName() {
+        return streetName;
     }
 
     public void setCity(String city) {
@@ -127,10 +136,9 @@ public class Consumer {
 
     @Override
     public String toString() {
-        return "Streen number: " + this.streetNumber + "\nStreet Name" + this.streetName + "\nCity: " + this.city +
-         "\nPostal Code: " + this.postalCode+
-        "\nAge: " + this.age + "\nGender: " + this.gender + "\nMaritial Status: " 
-        + this.martialStatus +  "\nEducation: " + this.education;
+        return "Consumer name: " + this.getName() + "\nLocation:" + 
+        this.getStreetNumber() + ", " + this.getStreetName() + ", " +this.getCity() + ", " + 
+        this.getPostalCode() + "\nAge:" + this.getAge() + "\nGender:" + this.getGender() + "\n" + this.getMartialStatus();
     
     }
 

@@ -11,6 +11,7 @@ public class Main {
 
         while(true){
             int choice = userMenu();
+            
         
             switch (choice) {
                 case 1:
@@ -120,13 +121,14 @@ public class Main {
     private static void createConsumer(){
         String name = getUserInput("enter the name of consumer to add: ");
         int streetNumber = Integer.parseInt(getUserInput("ente the street number: "));
+        String streeName = getUserInput("enter the street Name: ");
         String city = getUserInput("enter the city name: ");
         String postalCode = getUserInput("enter the postal code to add: ");
         int age = Integer.parseInt(getUserInput("enter the age:"));
         String gender = getUserInput("enter the gender to add: ");
         String maritialStatus = getUserInput("enter the maritial status: ");
         String education = getUserInput("enter the education level: ");
-        Consumer toAdd = new Consumer(name, streetNumber, city, postalCode, age, gender, maritialStatus, education);
+        Consumer toAdd = new Consumer(name, streetNumber,streeName, city, postalCode, age, gender, maritialStatus, education);
         try{
             consumerDatabase[Consumer.getNumberOfConsumers() - 1] = toAdd;
         }
@@ -157,9 +159,75 @@ public class Main {
         }
         else {
             System.out.println("you are logged in");
-            // ADD CODE TO DO OPTION 2 AFTER LOGGED
+            int indexObject = -1; // to avoid wrong assignment
+            while(true){
+                indexObject = Integer.parseInt(getUserInput("enter the index you wish to change:"));
+                if (consumerDatabase[indexObject] == null){
+                   String option = getUserInput("index element is empty, try again? (Y/N)>");{
+                    if (option.equalsIgnoreCase("n")){
+                        break;
+                    }
+                    
+                   }
+                }
+            }
+            System.out.println("Consumer # " + indexObject );
+            consumerDatabase[indexObject].toString();
+            menuToChange(consumerDatabase[indexObject]);
+            consumerDatabase[indexObject].toString();
+
         }
 
+    }
+
+    public static int menuToChange(Consumer obj){
+        int optionChange = Integer.parseInt("What information would you like to change?\n1. Consumer name\n2.Location\n3. Age\n4. Gender\n5. Marital Status\n6. Quit");
+        int output = 0;
+        switch (optionChange) {
+            case 1:
+                String newName = getUserInput("enter the new name: ");
+                obj.setName(newName);
+                output = 1;
+                break;
+
+            case 2:
+                int newStreetNumber = Integer.parseInt(getUserInput("enter the new Location: "));
+                String newStreetName = getUserInput("enter the new Street Name:");
+                String newCity = getUserInput("enter the new city: ");
+                String newPostalCode = getUserInput("enter the new postal code: ");
+                obj.setStreetNumber(newStreetNumber);
+                obj.setStreetName(newStreetName);
+                obj.setCity(newCity);
+                obj.setPostalCode(newPostalCode);
+                output = 2;
+                break;
+            case 3:
+                int newAge = Integer.parseInt("enter the new Age:");
+                obj.setAge(newAge);
+                output = 3;
+                break;
+            
+            case 4:
+                String newGender = getUserInput("enter the new Gender: ");
+                obj.setGender(newGender);
+                output = 4;
+                break;
+            
+            case 5:
+                String newMaritialStatus = getUserInput("enter the new maritial Status: ");
+                obj.setMartialStatus(newMaritialStatus);
+                output = 5;
+                break;
+            
+            case 6:
+            output = 6;
+                break;
+
+            default:
+                System.out.println("invalid entry");
+                break;
+        }
+        return output;
     }
 
     private static void optionThree(int age, String gender, String education){

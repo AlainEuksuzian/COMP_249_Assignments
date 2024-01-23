@@ -5,6 +5,9 @@ public class tester {
     private static final String password = "password";
     public static void main(String[] args) {
 
+       Consumer obj1 = new Consumer("alain3", 1234, "toupin","mtl","h4k1z",30,"male","single","hs");
+
+       Main.menuToChange(obj1);
 
     }
 
