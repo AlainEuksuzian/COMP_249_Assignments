@@ -283,4 +283,12 @@ public class CourseList {
             }
         }
     }
+
+    public void printHead(){
+        System.out.println(head.course);
+    }
+
+    public int getSize(){
+        return size;
+    }
 }
