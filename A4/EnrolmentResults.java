@@ -1,4 +1,6 @@
 package A4;
+
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.*;
@@ -8,35 +10,103 @@ import java.util.*;
 public class EnrolmentResults {
     private static CourseList listOne = new CourseList();
     private static CourseList listTwo = new CourseList();
-    private static Scanner inputStream = null;
+
+    private static Scanner inputStreamSyllabus = null;
+    private static Scanner inpustreamRequest = null;
+
+    private static Scanner keyboard = new Scanner(System.in);
+
+    private static ArrayList<String> requestedCourses = new ArrayList<>();
+    private static ArrayList<String> finishedCourses = new ArrayList<>();
+
+
     public static void main(String[] args) {
 
-       inputStream = readFile("C:/Users/Alain E/Desktop/vscode-files/JAVA/comp249_assignments/A4/text_files/Syllabus.txt");
+        inputStreamSyllabus = readFile("C:/Users/Alain E/Desktop/vscode-files/JAVA/comp249_assignments/A4/text_files/Syllabus.txt");
     
-       Set<Course> uniqueCourses = ParseSyllabusFile(inputStream);
+       Set<Course> uniqueCourses = ParseSyllabusFile(inputStreamSyllabus);
        loadLinkedListOne(uniqueCourses);
+        
+       String fileChoice = "Request.txt";    
+       inpustreamRequest = readFileRequest("C:\\Users\\Alain E\\Desktop\\vscode-files\\JAVA\\comp249_assignments\\A4\\text_files\\"+ fileChoice);
+       parseRequestTxt();
 
-       System.out.println(listOne.contains("COMP201"));
-       System.out.println("end");
+       
+
 
     }
+    /**
+    * This method is used to parse the request.txt file and extract the courses that have been requested
+     and the courses that have been finished.
+    */
+    public static void parseRequestTxt(){
+        String data = "";
+        while(inpustreamRequest.hasNext()){
+           data += inpustreamRequest.nextLine() + " ";
+        }
+        
+        int requestedStart = data.indexOf(" ");
+        int requestedEnd = data.indexOf("Requested");
+  
+        String allRequested = data.substring(requestedStart+1, requestedEnd);
+        String[] requestedClasses = allRequested.split(" ");
 
+        int wordLength = "Requested".length();
+
+        String finished = data.substring(requestedEnd+wordLength+1);
+        String[] finishedClasses = finished.split(" ");
+  
+        for (String e: finishedClasses){
+            requestedCourses.add(e);
+        }
+
+        for (String e : requestedClasses){
+            finishedCourses.add(e);
+        }
+    }
+
+
+    /**
+     * Reads the contents of a file and returns it as a Scanner object.
+     * @param file the path of the file to be read
+     * @return a Scanner object that contains the contents of the file
+     * @throws FileNotFoundException if the file cannot be found
+     */
+    public static Scanner readFileRequest(String file){
+        try{
+            inpustreamRequest = new Scanner(new FileInputStream(file));
+        }
+        catch (FileNotFoundException e){
+            System.out.println(e.getMessage());
+            System.exit(0);
+        }
+        return inpustreamRequest;
+    }
+
+    /**
+     * Reads the contents of a file and returns it as a Scanner object.
+     *
+     * @param file the path of the file to be read
+     * @return a Scanner object that contains the contents of the file
+     * @throws FileNotFoundException if the file cannot be found
+     */
     public static Scanner readFile(String file){
         try{
-            inputStream = new Scanner(new FileInputStream(file));
+            inputStreamSyllabus = new Scanner(new FileInputStream(file));
         }
         catch(FileNotFoundException e){
             System.out.println(e.getMessage());
             System.exit(0);
         }
-        return inputStream;
+        return inputStreamSyllabus;
     }
-    /*method arg: Scanner input
-    loop through input and parse
-    create course obj and add parsed data
-    add course obj to set   .replaceAll("\\s+","")
-    loop through set and add object to listOne */
 
+
+    /**
+     * This method is used to parse the syllabus file and extract the courses and their details.
+     * @param inputStream the input stream of the syllabus file
+     * @return the set of unique courses
+     */
     public static Set<Course> ParseSyllabusFile(Scanner inputStream){
 
         Set<Course> uniqueCourses = new HashSet<Course>();
@@ -67,24 +137,37 @@ public class EnrolmentResults {
                     coReqData = coReqLocal.replaceAll("\\s+","");
                 }
                
-                double credit = Double.parseDouble(parsedData[2]);
-    
-                Course course = new Course(parsedData[0], parsedData[1], credit, preCreqData, coReqData);
+                Course course = new Course(parsedData[0], parsedData[1], Double.parseDouble(parsedData[2]), preCreqData, coReqData);
                 uniqueCourses.add(course);
                 
             }
         }
         catch(Exception e){
-            System.out.println(e.getMessage());
+            //do nothing
         }
         return uniqueCourses;
     }
 
+    /**
+     * This method is used to load the courses from the syllabus file into a linked list.
+     *
+     * @param uniqueCourses the set of unique courses
+     */
     public static void loadLinkedListOne(Set<Course> uniqueCourses){
-        Iterator<Course> itr = uniqueCourses.iterator();
+        Iterator<Course> iterator = uniqueCourses.iterator();
 
-        while (itr.hasNext()) {
-            listOne.addToStart(itr.next());
+        while (iterator.hasNext()) {
+            listOne.addToStart(iterator.next());
         }
+    }
+
+    /**
+     * This method is used to get user input from the console.
+     * @param message the message to be displayed to the user
+     * @return the user input
+     */
+    public static String getUserInput(String message){
+        System.out.print(message);
+        return keyboard.nextLine();
     }
 }

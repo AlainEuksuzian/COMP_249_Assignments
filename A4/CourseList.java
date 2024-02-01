@@ -95,6 +95,7 @@ public class CourseList {
      */
     public void addToStart(Course object){
         head = new CourseNode(object, head);
+        size++;
     }
 
 
@@ -245,6 +246,7 @@ public class CourseList {
             if (position.course.getCourseId().equalsIgnoreCase(courseId)){
                 return true;
             }
+            position = position.link;
         }
         return false;
     }
@@ -284,10 +286,17 @@ public class CourseList {
         }
     }
 
+    /**
+     * prints head for unit testing
+     */
     public void printHead(){
         System.out.println(head.course);
     }
 
+    /**
+     * returns size of the linked list
+     * @return int value indicating the size of the list
+     */
     public int getSize(){
         return size;
     }
