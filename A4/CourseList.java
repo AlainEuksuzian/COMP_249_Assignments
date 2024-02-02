@@ -300,4 +300,34 @@ public class CourseList {
     public int getSize(){
         return size;
     }
+
+    /**
+     * prints linked List
+     */
+    public void printList(){
+        CourseNode position = head;
+
+        while(position != null){
+            System.out.println(position.course);
+            System.out.println("_________________________");
+            position = position.link;
+        }
+    }
+
+    /**
+     * returns course object at a specific node that matches course ID
+     * @param id
+     * @return 
+     */
+    public Course getObject(String id){
+        CourseNode position = head;
+
+        while(position != null){
+            if (position.course.getCourseId().equalsIgnoreCase(id)){
+                return position.course;
+            }
+            position = position.link;
+        }
+        return null;
+    }
 }

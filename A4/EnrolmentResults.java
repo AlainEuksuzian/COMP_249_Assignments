@@ -27,14 +27,16 @@ public class EnrolmentResults {
        Set<Course> uniqueCourses = ParseSyllabusFile(inputStreamSyllabus);
        loadLinkedListOne(uniqueCourses);
         
-       String fileChoice = "Request.txt";    
+       String fileChoice = getUserInput("enter the file name to search: ") + ".txt";
        inpustreamRequest = readFileRequest("C:\\Users\\Alain E\\Desktop\\vscode-files\\JAVA\\comp249_assignments\\A4\\text_files\\"+ fileChoice);
+
+
        parseRequestTxt();
 
-       
-
-
+       outputEnrollementDecision();
     }
+
+
     /**
     * This method is used to parse the request.txt file and extract the courses that have been requested
      and the courses that have been finished.
@@ -150,7 +152,6 @@ public class EnrolmentResults {
 
     /**
      * This method is used to load the courses from the syllabus file into a linked list.
-     *
      * @param uniqueCourses the set of unique courses
      */
     public static void loadLinkedListOne(Set<Course> uniqueCourses){
@@ -169,5 +170,40 @@ public class EnrolmentResults {
     public static String getUserInput(String message){
         System.out.print(message);
         return keyboard.nextLine();
+    }
+
+    /**
+     * loops over requested courses, linked list and finished courses to output if student can enroll in a class or not
+     */
+    public static void outputEnrollementDecision(){
+
+        for (String e : requestedCourses){
+            if (listOne.contains(e)){
+                Course obj = listOne.getObject(e);
+                   String pre = obj.getPreReqId();
+                   String co = obj.getCoReqId();
+
+                   if (requestedCourses.size() == 0){
+                    System.out.println("No classes requested");
+                    return;
+                   }
+                   if (pre == null && co == null){
+                    System.out.println("Student can enroll in: " + e + " As those classes do not have any preRequisite or CoRequisite");
+                   }
+                   else if (pre==null && requestedCourses.contains(co)){
+                    System.out.println("Student can enroll in: " + e + " As he has also requested to enroll in: " + co + " And class has no preRequisite");
+                   }
+    
+                   else if (finishedCourses.contains(pre) && finishedCourses.contains(co)){
+                    System.out.println("Student can enroll in: " + e + " As he has finished: " + pre  + " " + co);
+                   }
+                   else if (finishedCourses.contains(pre) && requestedCourses.contains(co)){
+                    System.out.println("Student can enroll in: " + e + " As he has finished: " + pre + " And is requesting to enroll in: " + co);
+                   } 
+                   else if (!finishedCourses.contains(pre)){
+                    System.out.println("Student cannot enroll in: " + e + " As he has not completed: " + pre );
+                }
+            }
+        }
     }
 }
